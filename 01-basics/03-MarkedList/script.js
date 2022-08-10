@@ -32,15 +32,15 @@ const emails = [
 createApp({
   data() {
     return {
-      searchPhrase: ``
+      searchPhrase: ``,
     };
   },
   computed: {
     filteredEmails() {
       return emails.map((name) => ({
         name: name,
-        style: this.searchPhrase && name.toLowerCase().includes(this.searchPhrase.toLowerCase()) ? `marked` : ``
+        isMarked: this.searchPhrase && name.toLowerCase().includes(this.searchPhrase.toLowerCase()),
       }));
     },
-  }
+  },
 }).mount('#app');
