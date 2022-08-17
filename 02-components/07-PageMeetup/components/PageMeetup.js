@@ -1,7 +1,8 @@
 import { defineComponent } from '../vendor/vue.esm-browser.js';
 import UiContainer from './UiContainer.js';
 import UiAlert from './UiAlert.js';
-//import { fetchMeetupById } from './meetupService.js';
+import { fetchMeetupById } from '../meetupService.js';
+import MeetupView from './MeetupView.js';
 
 export default defineComponent({
   name: 'PageMeetup',
@@ -9,6 +10,7 @@ export default defineComponent({
   components: {
     UiAlert,
     UiContainer,
+    MeetupView,
   },
 
   props: {
@@ -18,42 +20,44 @@ export default defineComponent({
     },
   },
 
+  data() {
+    return {
+      meetup: null,
+      hasError: false,
+      inProgress: true,
+    };
+  },
   watch: {
     meetupId: {
-      handler(newValue, oldValue) {
-        console.log(`${newValue} ${oldValue}`);
-        /*
-        try {
-          fetchMeetupById(newValue).then((meetup) => {
-            this.meetupTitle = meetup.title
-          });
-        } catch (err) {
-          console.error(`Error while requesting meetup ${err}`);
-        }
-         */
+      handler(newValue) {
+        this.meetup = null;
+        this.inProgress = true;
+        this.hasError = false;
+        fetchMeetupById(newValue)
+          .then((meetup) => {
+            this.meetup = meetup;
+            this.inProgress = false;
+          })
+          .catch(
+            function (Error) {
+              this.inProgress = false;
+              this.hasError = true;
+          }.bind(this));
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
 
   template: `
     <div class="page-meetup">
+    <MeetupView v-if="meetup" :meetup="meetup"></MeetupView>
 
-    <MeetupView :meetup="meetup" />
-
-    <UiContainer>
+    <UiContainer v-if="inProgress">
       <UiAlert>Загрузка...</UiAlert>
     </UiContainer>
 
-    <UiContainer>
-      <UiAlert>error</UiAlert>
+    <UiContainer v-if="hasError">
+      <UiAlert>Test Error</UiAlert>
     </UiContainer>
-
-    </div>
-    <script>
-    import MeetupView from "./MeetupView";
-    export default {
-      components: {MeetupView}
-    }
-    </script>`,
+    </div>`,
 });

@@ -1,11 +1,11 @@
 import { defineComponent } from '../vendor/vue.esm-browser.js';
 import UiAlert from './UiAlert.js';
 import UiContainer from './UiContainer.js';
-import MeetupAgenda from "../../05-MeetupAgenda/MeetupAgenda";
-import MeetupAgendaItem from "../../05-MeetupAgenda/MeetupAgendaItem";
-import MeetupCover from "./MeetupCover";
-import MeetupDescription from "./MeetupDescription";
-import MeetupInfo from "./MeetupInfo";
+import MeetupAgenda from './MeetupAgenda.js';
+import MeetupAgendaItem from './MeetupAgendaItem.js';
+import MeetupCover from './MeetupCover.js';
+import MeetupDescription from './MeetupDescription.js';
+import MeetupInfo from './MeetupInfo.js';
 
 export default defineComponent({
   name: 'MeetupView',
