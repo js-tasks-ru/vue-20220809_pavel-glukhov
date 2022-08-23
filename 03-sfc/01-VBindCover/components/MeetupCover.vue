@@ -1,30 +1,26 @@
 <template>
   <div class="meetup-cover">
-    <h1 class="meetup-cover__title"> {{ title }}</h1>
+    <h1 class="meetup-cover__title">{{ title }}</h1>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'MeetupCover',
-
-  computed: {
-    backgroundImage() {
-      return `{ background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(` + this.image + `) }`;
-    },
-    calcImage() {
-      return this.image ? this.backgroundImage : `--default-cover`;
-    },
-  },
   props: {
     title: {
       type: String,
     },
-
     image: {
       type: String,
-      default: `--default-cover`
+    },
+  },
+
+  computed: {
+    calcImage() {
+      return this.image
+        ? `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(` + this.image + `)`
+        : `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), var(--default-cover)`;
     },
   },
 };
@@ -34,7 +30,7 @@ export default {
 .meetup-cover {
   background-size: cover;
   background-position: center;
-  background-image: v-bind(backgroundImage2);
+  background-image: v-bind(calcImage);
   display: flex;
   flex-direction: column;
   align-items: center;
