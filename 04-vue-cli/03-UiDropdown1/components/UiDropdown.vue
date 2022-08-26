@@ -2,7 +2,7 @@
   <div class="dropdown dropdown_opened">
     <button type="button" class="dropdown__toggle dropdown__toggle_icon">
       <ui-icon icon="tv" class="dropdown__icon" />
-      <span>Title</span>
+      <span>{{ Title }}</span>
     </button>
 
     <div class="dropdown__menu" role="listbox">
@@ -25,6 +25,19 @@ export default {
   name: 'UiDropdown',
 
   components: { UiIcon },
+
+  props: {
+    options: {
+      required: true,
+      type: Array,
+    },
+    modelValue: {
+    },
+    title: {
+      required: true,
+    },
+  },
+
 };
 </script>
 

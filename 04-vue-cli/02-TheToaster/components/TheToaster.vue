@@ -1,12 +1,13 @@
 <template>
   <div class="toasts">
     <template v-for="toaster in toasters">
-      <div v-if="toaster.type==='success'" class="toast toast_success">
+      <!-- TODO Add calculation of styles and use only one div-->
+      <div v-if="toaster.type === 'success'" class="toast toast_success">
         <ui-icon class="toast__icon" icon="check-circle"/>
         <span>{{ toaster.message }}</span>
       </div>
 
-      <div v-if="toaster.type==='error'" class="toast toast_error">
+      <div v-if="toaster.type === 'error'" class="toast toast_error">
         <ui-icon class="toast__icon" icon="alert-circle"/>
         <span>{{ toaster.message }}</span>
       </div>
@@ -19,7 +20,7 @@ import UiIcon from './UiIcon.vue';
 
 const Status = {
   success: `success`,
-  error: `error`
+  error: `error`,
 };
 
 export default {
@@ -29,8 +30,8 @@ export default {
   data() {
     return {
       id: 0,
-      toasters: []
-    }
+      toasters: [],
+    };
   },
 
   methods: {
@@ -44,12 +45,12 @@ export default {
       return ++this.id;
     },
     remove(id) {
-      const element = this.toasters.find(item => item.id === id);
+      const element = this.toasters.find((item) => item.id === id);
       if (!element) {
         return;
       }
       clearTimeout(element.timerEvent);
-      this.toasters = this.toasters.filter(item => item.id !== id);
+      this.toasters = this.toasters.filter((item) => item.id !== id);
     },
     createElement(elementType, message) {
       const id = this.generateNewId();
@@ -59,8 +60,8 @@ export default {
       }, 5000);
 
       return {type: elementType, message: message, id: id, timerEvent: timerEvent};
-    }
-  }
+    },
+  },
 };
 </script>
 
