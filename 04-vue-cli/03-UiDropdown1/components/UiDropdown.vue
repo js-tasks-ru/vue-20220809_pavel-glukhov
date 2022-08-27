@@ -6,16 +6,14 @@
     </button>
 
     <div class="dropdown__menu" role="listbox">
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 1
-      </button>
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 2
-      </button>
-    </div>
-  </div>
+      <template v-for="option in options">
+        <button class="dropdown__item dropdown__item_icon" role="option" type="button">
+          <ui-icon icon="tv" class="dropdown__icon" />
+          {{ option.text }}
+        </button>
+      </template>
+
+   </div>
 </template>
 
 <script>
@@ -31,13 +29,11 @@ export default {
       required: true,
       type: Array,
     },
-    modelValue: {
-    },
+    modelValue: {},
     title: {
       required: true,
     },
   },
-
 };
 </script>
 
