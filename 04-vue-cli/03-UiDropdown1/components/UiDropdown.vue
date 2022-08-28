@@ -1,19 +1,19 @@
 <template>
-  <div class="dropdown dropdown_opened">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-      <ui-icon icon="tv" class="dropdown__icon" />
-      <span>{{ Title }}</span>
+  <div class="dropdown" :class="{ '.dropdown_opened': opened }">
+    <button type="button" class="dropdown__toggle dropdown__toggle_icon" @click="openMenu">
+      <ui-icon v-if="active.icon" :icon="active.icon" class="dropdown__icon" />
+      <span>{{ getTitle }}</span>
     </button>
 
-    <div class="dropdown__menu" role="listbox">
+    <div v-show="opened" :class="{ dropdown__menu: opened }" role="listbox">
       <template v-for="option in options">
-        <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-          <ui-icon icon="tv" class="dropdown__icon" />
+        <button class="dropdown__item" :class="{ dropdown__item_icon : hasIcon}" role="option" type="button" @click="itemSelect(option)">
+          <ui-icon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
           {{ option.text }}
         </button>
       </template>
-
-   </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -32,6 +32,50 @@ export default {
     modelValue: {},
     title: {
       required: true,
+    },
+  },
+  data() {
+    return {
+      opened: false,
+      print: true,
+      active: { text: this.title },
+      hasIcon: true,
+    };
+  },
+  computed: {
+    isOpened() {
+      return this.opened;
+    },
+    getTitle() {
+      return this.active.text || this.title;
+    },
+  },
+  watch: {
+    options: {
+      handler(newValue) {
+        if (newValue.length === 0) {
+          this.hasIcon = false;
+        }
+        this.hasIcon = newValue.filter((item) => item.icon).length > 0;
+      },
+      immediate: true,
+    },
+  },
+  methods: {
+    getPrint() {
+      if (this.print) {
+        this.print = false;
+        return true;
+      }
+      return false;
+    },
+    openMenu() {
+      this.opened = !this.opened;
+    },
+    itemSelect(element) {
+      this.active.text = element.text;
+      this.active.icon = element.icon;
+      this.opened = false;
     },
   },
 };
