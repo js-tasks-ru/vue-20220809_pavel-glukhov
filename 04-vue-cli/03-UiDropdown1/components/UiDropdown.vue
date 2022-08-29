@@ -1,13 +1,19 @@
 <template>
   <div class="dropdown" :class="{ '.dropdown_opened': opened }">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon" @click="openMenu">
+    <button type="button" class="dropdown__toggle" :class="{ dropdown__toggle_icon: hasIcon }" @click="openMenu">
       <ui-icon v-if="active.icon" :icon="active.icon" class="dropdown__icon" />
       <span>{{ getTitle }}</span>
     </button>
 
     <div v-show="opened" :class="{ dropdown__menu: opened }" role="listbox">
       <template v-for="option in options">
-        <button class="dropdown__item" :class="{ dropdown__item_icon : hasIcon}" role="option" type="button" @click="itemSelect(option)">
+        <button
+          class="dropdown__item"
+          :class="{ dropdown__item_icon: hasIcon }"
+          role="option"
+          type="button"
+          @click="itemSelect(option)"
+        >
           <ui-icon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
           {{ option.text }}
         </button>
@@ -43,9 +49,6 @@ export default {
     };
   },
   computed: {
-    isOpened() {
-      return this.opened;
-    },
     getTitle() {
       return this.active.text || this.title;
     },
@@ -57,18 +60,14 @@ export default {
           this.hasIcon = false;
         }
         this.hasIcon = newValue.filter((item) => item.icon).length > 0;
-
       },
       immediate: true,
     },
-
     modelValue: {
       handler(newValue) {
         if (!newValue) {
           return;
         }
-        console.log(`modelValue ` + newValue);
-        this.options.forEach((item)=>{console.log(`item `, JSON.stringify(item))} );
         const element = this.options.find((item) => item.value === newValue);
         if (element) {
           this.active.text = element.text;
@@ -76,17 +75,9 @@ export default {
         }
       },
       immediate: true,
-    }
-
+    },
   },
   methods: {
-    getPrint() {
-      if (this.print) {
-        this.print = false;
-        return true;
-      }
-      return false;
-    },
     openMenu() {
       this.opened = !this.opened;
     },
