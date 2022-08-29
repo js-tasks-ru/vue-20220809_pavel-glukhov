@@ -23,7 +23,6 @@ export default {
   name: 'UiDropdown',
 
   components: { UiIcon },
-
   props: {
     options: {
       required: true,
@@ -34,6 +33,7 @@ export default {
       required: true,
     },
   },
+  emits: ['update:modelValue'],
   data() {
     return {
       opened: false,
@@ -57,9 +57,27 @@ export default {
           this.hasIcon = false;
         }
         this.hasIcon = newValue.filter((item) => item.icon).length > 0;
+
       },
       immediate: true,
     },
+
+    modelValue: {
+      handler(newValue) {
+        if (!newValue) {
+          return;
+        }
+        console.log(`modelValue ` + newValue);
+        this.options.forEach((item)=>{console.log(`item `, JSON.stringify(item))} );
+        const element = this.options.find((item) => item.value === newValue);
+        if (element) {
+          this.active.text = element.text;
+          this.active.icon = element.icon;
+        }
+      },
+      immediate: true,
+    }
+
   },
   methods: {
     getPrint() {
@@ -75,6 +93,7 @@ export default {
     itemSelect(element) {
       this.active.text = element.text;
       this.active.icon = element.icon;
+      this.$emit('update:modelValue', element.text);
       this.opened = false;
     },
   },
