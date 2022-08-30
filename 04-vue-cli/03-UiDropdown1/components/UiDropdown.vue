@@ -5,7 +5,7 @@
       <span>{{ getTitle }}</span>
     </button>
 
-    <div v-show="opened" :class="{ dropdown__menu: opened }" role="listbox">
+    <div v-show="opened" class="dropdown__menu" role="listbox">
       <template v-for="option in options">
         <button
           class="dropdown__item"
@@ -84,7 +84,7 @@ export default {
     itemSelect(element) {
       this.active.text = element.text;
       this.active.icon = element.icon;
-      this.$emit('update:modelValue', element.text);
+      this.$emit('update:modelValue', element.value);
       this.opened = false;
     },
   },
