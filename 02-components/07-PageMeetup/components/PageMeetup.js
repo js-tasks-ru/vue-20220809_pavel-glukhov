@@ -39,10 +39,11 @@ export default defineComponent({
             this.inProgress = false;
           })
           .catch(
-            function (Error) {
+            ()=> {
               this.inProgress = false;
               this.hasError = true;
-          }.bind(this));
+            }
+            );
       },
       immediate: true,
     },

@@ -1,24 +1,67 @@
 <template>
   <div class="toasts">
-    <div class="toast toast_success">
-      <ui-icon class="toast__icon" icon="check-circle" />
-      <span>Success Toast Example</span>
-    </div>
+    <template v-for="toaster in toasters">
+      <!-- TODO Add calculation of styles and use only one div-->
+      <div v-if="toaster.type === 'success'" class="toast toast_success">
+        <ui-icon class="toast__icon" icon="check-circle"/>
+        <span>{{ toaster.message }}</span>
+      </div>
 
-    <div class="toast toast_error">
-      <ui-icon class="toast__icon" icon="alert-circle" />
-      <span>Error Toast Example</span>
-    </div>
+      <div v-if="toaster.type === 'error'" class="toast toast_error">
+        <ui-icon class="toast__icon" icon="alert-circle"/>
+        <span>{{ toaster.message }}</span>
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
 import UiIcon from './UiIcon.vue';
 
+const Status = {
+  success: `success`,
+  error: `error`,
+};
+
 export default {
   name: 'TheToaster',
 
-  components: { UiIcon },
+  components: {UiIcon},
+  data() {
+    return {
+      id: 0,
+      toasters: [],
+    };
+  },
+
+  methods: {
+    success(message) {
+      this.toasters.push(this.createElement(`success`, message));
+    },
+    error(message) {
+      this.toasters.push(this.createElement(`error`, message));
+    },
+    generateNewId() {
+      return ++this.id;
+    },
+    remove(id) {
+      const element = this.toasters.find((item) => item.id === id);
+      if (!element) {
+        return;
+      }
+      clearTimeout(element.timerEvent);
+      this.toasters = this.toasters.filter((item) => item.id !== id);
+    },
+    createElement(elementType, message) {
+      const id = this.generateNewId();
+
+      const timerEvent = setTimeout(() => {
+        this.remove(id);
+      }, 5000);
+
+      return {type: elementType, message: message, id: id, timerEvent: timerEvent};
+    },
+  },
 };
 </script>
 
