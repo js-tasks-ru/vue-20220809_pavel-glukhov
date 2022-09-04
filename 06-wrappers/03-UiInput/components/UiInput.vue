@@ -1,12 +1,17 @@
 <template>
   <div class="input-group input-group_icon input-group_icon-left input-group_icon-right">
-    <div class="input-group__icon">
+    <div class="input-group_icon input-group_icon-left">
       <img class="icon" alt="icon" />
     </div>
 
-    <input ref="input" class="form-control form-control_rounded form-control_sm" />
+    <component :is="elementType" :ref="elementType" class="form-control" :class="{'form-control_sm': small,
+     'form-control_rounded': rounded}"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+    >
+    </component>
 
-    <div class="input-group__icon">
+    <div class="input-group_icon input-group_icon-right input-group">
       <img class="icon" alt="icon" />
     </div>
   </div>
@@ -15,6 +20,28 @@
 <script>
 export default {
   name: 'UiInput',
+  inheritAttrs: false,
+  props: {
+    modelValue: {
+      type:String,
+    },
+    small: {
+      type: Boolean,
+    },
+    rounded: {
+      type: Boolean,
+    },
+    multiline: {
+      type: Boolean,
+    },
+
+  },
+emits: ['update:modelValue'],
+  computed: {
+    elementType() {
+      return this.multiline ? 'textarea' : 'input';
+    }
+  }
 };
 </script>
 
