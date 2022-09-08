@@ -1,14 +1,22 @@
 <template>
   <label class="checkbox">
-    <input type="checkbox" class="checkbox__input" />
+    <input type="checkbox" class="checkbox__input" :value="modelValue" @click="$emit('update:modelValue',$event.target.value)"/>
     <span class="checkbox__box"></span>
-    Label Text
+    <slot>
+    </slot>
   </label>
 </template>
 
 <script>
 export default {
   name: 'UiCheckbox',
+  inheritAttrs: true,
+  emits: ['update:modelValue'],
+  props: {
+    modelValue: {
+      type:Boolean,
+    },
+  },
 };
 </script>
 
