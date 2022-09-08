@@ -1,8 +1,6 @@
 <template>
   <div class="input-group input-group_icon">
-    <div class="input-group_icon-right">
-      <img class="icon" alt="icon" />
-    </div>
+    <slot name="left-icon"></slot>
 
     <component :is="elementType"
                v-bind="$attrs"
@@ -12,9 +10,8 @@
     >
     </component>
 
-    <div class="input-group_icon-left">
-      <img class="icon" alt="icon" />
-    </div>
+    <slot name="right-icon"></slot>
+
   </div>
 </template>
 
