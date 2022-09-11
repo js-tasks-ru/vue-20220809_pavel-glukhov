@@ -1,7 +1,12 @@
 <template>
-  <div class="input-group" :class="{'input-group_icon': hasLeftIcon || hasRightIcon}">
-    <div v-if="hasLeftIcon" class="input-group__icon" :class="{ 'input-group_icon-left ': hasLeftIcon }">
-      <slot name="left-icon"></slot>
+  <div class="input-group" :class="{
+    'input-group_icon': $slots['left-icon'] || $slots['right-icon'],
+    'input-group_icon-left': $slots['left-icon'],
+    'input-group_icon-right': $slots['right-icon'],
+    }">
+
+    <div v-if="$slots['left-icon']" class="input-group__icon ">
+      <slot name="left-icon" />
     </div>
 
     <component
@@ -14,11 +19,8 @@
       @input="$emit('update:modelValue', $event.target.value)"
     >
     </component>
-    <div
-      v-if="hasRightIcon"
-      :class="{ 'input-group_icon-left': hasRightIcon }"
-    >
-      <slot name="right-icon"></slot>
+    <div v-if="$slots['right-icon']" class="input-group__icon">
+      <slot name="right-icon" />
     </div>
   </div>
 </template>

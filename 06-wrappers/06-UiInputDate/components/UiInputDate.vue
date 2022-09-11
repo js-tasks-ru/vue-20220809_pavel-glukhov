@@ -8,6 +8,6 @@ import UiInput from './UiInput';
 export default {
   name: 'UiInputDate',
 
-  components: { UiInput },
+components: { UiInput },
 };
 </script>
