@@ -1,8 +1,10 @@
 <template>
   <div class="image-uploader">
-    <label class="image-uploader__preview "
-           :class="{ 'image-uploader__preview-loading': previewLoading }"
-           :style="{ '--bg-url': selectedFile }">
+    <label
+      class="image-uploader__preview"
+      :class="{ 'image-uploader__preview-loading': previewLoading }"
+      :style="{ '--bg-url': selectedFile }"
+    >
       <span class="image-uploader__text">{{ title }}</span>
       <input
         v-bind="$attrs"
@@ -11,13 +13,13 @@
         accept="image/*"
         class="image-uploader__input"
         @change="selectFile"
+        @click="processImage"
       />
     </label>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'UiImageUploader',
   inheritAttrs: false,
@@ -37,6 +39,15 @@ export default {
   },
   emits: ['select', 'upload', 'error'],
   methods: {
+    processImage() {
+      if (this.previewLoading) {
+        return;
+      }
+      if (this.file) {
+        this.file = null;
+        this.$emit('remove');
+      }
+    },
     selectFile() {
       console.log(`select file`);
       this.file = event.target.files[0];
@@ -66,7 +77,7 @@ export default {
     },
     title() {
       if (this.previewLoading) {
-        return "Загрузка...";
+        return 'Загрузка...';
       }
       if (!this.file) {
         if (this.preview) {
