@@ -1,15 +1,91 @@
 <template>
   <div class="image-uploader">
-    <label class="image-uploader__preview image-uploader__preview-loading" style="--bg-url: url('/link.jpeg')">
-      <span class="image-uploader__text">Загрузить изображение</span>
-      <input type="file" accept="image/*" class="image-uploader__input" />
+    <label class="image-uploader__preview "
+           :class="{ 'image-uploader__preview-loading': previewLoading }"
+           :style="{ '--bg-url': selectedFile }">
+      <span class="image-uploader__text">{{ title }}</span>
+      <input
+        v-bind="$attrs"
+        type="file"
+        :value="fileName"
+        accept="image/*"
+        class="image-uploader__input"
+        @change="selectFile"
+      />
     </label>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'UiImageUploader',
+  inheritAttrs: false,
+  props: {
+    preview: {
+      type: String,
+    },
+    uploader: {
+      type: Function,
+    },
+  },
+  data() {
+    return {
+      file: null,
+      uploadInProgress: false,
+    };
+  },
+  emits: ['select', 'upload', 'error'],
+  methods: {
+    selectFile() {
+      console.log(`select file`);
+      this.file = event.target.files[0];
+      this.$emit('select', event.target.files[0]);
+
+      if (this.uploader) {
+        this.uploadInProgress = true;
+        this.uploader(this.file)
+          .then((response) => {
+            this.$emit('upload', response);
+            this.uploadInProgress = false;
+          })
+          .catch((error) => {
+            this.$emit('error', error);
+            this.file = null;
+            this.uploadInProgress = false;
+          });
+      }
+    },
+  },
+  computed: {
+    previewLoading() {
+      return this.uploadInProgress;
+    },
+    selectedFile() {
+      return this.file ? `url(${this.file})` : ``;
+    },
+    title() {
+      if (this.previewLoading) {
+        return "Загрузка...";
+      }
+      if (!this.file) {
+        if (this.preview) {
+          return `Удалить изображение`;
+        } else {
+          return `Загрузить изображение`;
+        }
+      } else {
+        if (!this.uploader) {
+          return `Удалить изображение`;
+        }
+      }
+
+      return `Загрузить изображение`;
+    },
+    fileName() {
+      return this.file;
+    },
+  },
 };
 </script>
 

@@ -1,17 +1,25 @@
 <template>
-  <div class="input-group input-group_icon">
-    <slot name="left-icon"></slot>
+  <div class="input-group" :class="{'input-group_icon': hasLeftIcon || hasRightIcon}">
+    <div v-if="hasLeftIcon" class="input-group__icon" :class="{ 'input-group_icon-left ': hasLeftIcon }">
+      <slot name="left-icon"></slot>
+    </div>
 
-    <component :is="elementType"
-               v-bind="$attrs"
-               :ref="elementType" class="form-control" :class="{'form-control_sm': small, 'form-control_rounded': rounded}"
+    <component
+      :is="elementType"
+      v-bind="$attrs"
+      :ref="elementType"
+      class="form-control"
+      :class="{ 'form-control_sm': small, 'form-control_rounded': rounded }"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
     >
     </component>
-
-    <slot name="right-icon"></slot>
-
+    <div
+      v-if="hasRightIcon"
+      :class="{ 'input-group_icon-left': hasRightIcon }"
+    >
+      <slot name="right-icon"></slot>
+    </div>
   </div>
 </template>
 
@@ -37,6 +45,12 @@ export default {
   computed: {
     elementType() {
       return this.multiline ? 'textarea' : 'input';
+    },
+    hasLeftIcon() {
+      return !!this.$slots['left-icon'];
+    },
+    hasRightIcon() {
+      return !!this.$slots['right-icon'];
     },
   },
   methods: {
