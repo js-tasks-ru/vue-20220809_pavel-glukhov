@@ -49,7 +49,6 @@ export default {
       }
     },
     selectFile() {
-      console.log(`select file`);
       this.file = event.target.files[0];
       this.$emit('select', event.target.files[0]);
 
