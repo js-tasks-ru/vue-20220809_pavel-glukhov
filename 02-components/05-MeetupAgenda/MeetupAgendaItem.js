@@ -4,7 +4,7 @@ import { agendaItemIcons, agendaItemDefaultTitles } from './meetupService.js';
 export default defineComponent({
   name: 'MeetupAgendaItem',
   props: {
-    agendaItem : {
+    agendaItem: {
       type: Object,
       required: true,
     },
