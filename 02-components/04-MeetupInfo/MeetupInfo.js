@@ -22,7 +22,7 @@ export default defineComponent({
       return new Date(this.date).toLocaleDateString(navigator.language, options);
     },
     dateISO() {
-      return new Date(this.date).toISOString().substr(0, 10);
+      return new Date(this.date).toISOString().slice(0, 10);
     },
   },
   template: `
