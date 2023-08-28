@@ -13,19 +13,22 @@ export default defineComponent({
     calcTitle() {
       return this.agendaItem.title ? this.agendaItem.title : agendaItemDefaultTitles[this.agendaItem.type];
     },
-    calcIcon() {
+    icon() {
       return agendaItemIcons[this.agendaItem.type];
+    },
+    iconSrc() {
+      return `/assets/icons/icon-${this.icon}.svg`;
     },
   },
   template: `
     <div class="agenda-item">
       <div class="agenda-item__col">
-        <img :src="'/assets/icons/icon-' + calcIcon + '.svg'" class="icon" :alt="calcIcon" />
+        <img :src="iconSrc" class="icon" :alt="icon" />
       </div>
       <div class="agenda-item__col">{{ agendaItem.startsAt }} - {{ agendaItem.endsAt }}</div>
       <div class="agenda-item__col">
         <h3 class="agenda-item__title">{{ calcTitle }}</h3>
-        <p v-if="agendaItem.type==='talk'"  class="agenda-item__talk">
+        <p v-if="agendaItem.type==='talk'" class="agenda-item__talk">
           <span>{{ agendaItem.speaker }}</span>
           <span class="agenda-item__dot"></span>
           <span class="agenda-item__lang">{{ agendaItem.language }}</span>
