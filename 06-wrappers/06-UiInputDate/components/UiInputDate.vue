@@ -1,5 +1,12 @@
 <template>
-  <ui-input v-bind="$attrs" v-model="modelValueProxy" :type="type"> </ui-input>
+  <ui-input v-bind="$attrs" v-model="modelValueProxy" :type="type">
+    <div v-if="$slots['left-icon']" class="input-group__icon">
+      <slot name="left-icon" />
+    </div>
+    <div v-if="$slots['right-icon']" class="input-group__icon">
+      <slot name="right-icon" />
+    </div>
+  </ui-input>
 </template>
 
 <script>

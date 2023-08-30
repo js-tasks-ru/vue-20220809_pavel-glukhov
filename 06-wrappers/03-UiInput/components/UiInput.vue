@@ -48,12 +48,6 @@ export default {
     elementType() {
       return this.multiline ? 'textarea' : 'input';
     },
-    hasLeftIcon() {
-      return !!this.$slots['left-icon'];
-    },
-    hasRightIcon() {
-      return !!this.$slots['right-icon'];
-    },
   },
   methods: {
     focus() {
