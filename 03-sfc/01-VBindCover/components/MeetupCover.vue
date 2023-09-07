@@ -18,9 +18,7 @@ export default {
 
   computed: {
     calcImage() {
-      return this.image
-        ? `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(` + this.image + `)`
-        : `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), var(--default-cover)`;
+      return this.image ? `url('${this.image}')` : 'var(--default-cover)';
     },
   },
 };
@@ -30,7 +28,7 @@ export default {
 .meetup-cover {
   background-size: cover;
   background-position: center;
-  background-image: v-bind(calcImage);
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), v-bind(calcImage);
   display: flex;
   flex-direction: column;
   align-items: center;

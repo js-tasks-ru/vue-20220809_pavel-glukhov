@@ -10,13 +10,13 @@ export default defineComponent({
   props: {
     agenda: {
       type: Array,
-      required:true,
+      required: true,
     },
   },
 
   template: `
     <ul class="agenda">
-      <li class="agenda__item" v-for="meetupAgenda in agenda">
+      <li class="agenda__item" v-for="meetupAgenda in agenda" :key="meetupAgenda.id">
         <meetup-agenda-item :agenda-item="meetupAgenda"></meetup-agenda-item>
       </li>
     </ul>`,
