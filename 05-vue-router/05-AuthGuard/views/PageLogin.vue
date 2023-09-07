@@ -6,12 +6,8 @@
 </template>
 
 <script>
-import {isAuthenticated, logout} from '../services/authService'
 export default {
-  name: 'PageLogin',
-  beforeRouteEnter(to, from) {
-    return logout() ? true : '/' ;
-  },
+  name: 'PageLogin'
 };
 </script>
 

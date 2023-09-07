@@ -1,6 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { isAuthenticated } from '../services/authService.js';
 
+/** @implements {import('vue-router').NavigationGuard} */
+function authGuard(to) {
+  // Гард принимает на вход следующий и предыдущий маршруты. Но нам нужен только следующий
+
+  // Если маршрут требует авторизации, а пользователь не авторизован - переходим на страницу авторизации
+  if (to.meta.requireAuth && !isAuthenticated()) {
+    // В query параметр from передаём путь запрашиваемой страницы
+    return { name: 'login', query: { from: to.fullPath } };
+  }
+
+  // Если маршрут требует отсутствия авторизации, а пользователь авторизован - переходим на главную страницу
+  if (to.meta.requireGuest && isAuthenticated()) {
+    return { name: 'index' };
+  }
+
+  // В остальных случаях разрешаем переход без ограничений
+  return true;
+}
 const router = createRouter({
   history: createWebHistory('/05-vue-router/05-AuthGuard'),
   routes: [
@@ -40,6 +58,6 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach( () =>{});
+router.beforeEach(authGuard);
 
 export { router };
