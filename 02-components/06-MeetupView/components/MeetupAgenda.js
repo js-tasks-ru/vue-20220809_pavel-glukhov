@@ -10,7 +10,7 @@ export default defineComponent({
   props: {
     agenda: {
       type: Array,
-      required:true,
+      required: true,
     },
   },
 

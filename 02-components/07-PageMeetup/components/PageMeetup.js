@@ -38,12 +38,10 @@ export default defineComponent({
             this.meetup = meetup;
             this.inProgress = false;
           })
-          .catch(
-            ()=> {
-              this.inProgress = false;
-              this.hasError = true;
-            }
-            );
+          .catch(() => {
+            this.inProgress = false;
+            this.hasError = true;
+          });
       },
       immediate: true,
     },

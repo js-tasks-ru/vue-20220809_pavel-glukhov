@@ -3,12 +3,12 @@
     <template v-for="toaster in toasters">
       <!-- TODO Add calculation of styles and use only one div-->
       <div v-if="toaster.type === 'success'" class="toast toast_success">
-        <ui-icon class="toast__icon" icon="check-circle"/>
+        <ui-icon class="toast__icon" icon="check-circle" />
         <span>{{ toaster.message }}</span>
       </div>
 
       <div v-if="toaster.type === 'error'" class="toast toast_error">
-        <ui-icon class="toast__icon" icon="alert-circle"/>
+        <ui-icon class="toast__icon" icon="alert-circle" />
         <span>{{ toaster.message }}</span>
       </div>
     </template>
@@ -26,7 +26,7 @@ const Status = {
 export default {
   name: 'TheToaster',
 
-  components: {UiIcon},
+  components: { UiIcon },
   data() {
     return {
       id: 0,
@@ -59,7 +59,7 @@ export default {
         this.remove(id);
       }, 5000);
 
-      return {type: elementType, message: message, id: id, timerEvent: timerEvent};
+      return { type: elementType, message: message, id: id, timerEvent: timerEvent };
     },
   },
 };

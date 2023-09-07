@@ -1,11 +1,13 @@
 <template>
-  <div class="input-group" :class="{
-    'input-group_icon': $slots['left-icon'] || $slots['right-icon'],
-    'input-group_icon-left': $slots['left-icon'],
-    'input-group_icon-right': $slots['right-icon'],
-    }">
-
-    <div v-if="$slots['left-icon']" class="input-group__icon ">
+  <div
+    class="input-group"
+    :class="{
+      'input-group_icon': $slots['left-icon'] || $slots['right-icon'],
+      'input-group_icon-left': $slots['left-icon'],
+      'input-group_icon-right': $slots['right-icon'],
+    }"
+  >
+    <div v-if="$slots['left-icon']" class="input-group__icon">
       <slot name="left-icon" />
     </div>
 
